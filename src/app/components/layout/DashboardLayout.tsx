@@ -10,9 +10,9 @@ const DashboardLayout = ({
   navSearch?: React.ReactNode;
 }) => {
   return (
-    <div className="w-full">
+    <div className="flex flex-col h-full ">
       {/* top nav */}
-      <div className="h-[72px] flex items-center justify-between px-6 border-b border-[#EFEFEF] ">
+      <div className="flex items-center min-h-[72px] justify-between px-6 border-b border-[#EFEFEF] ">
         <div>
           <SidebarTrigger />
           {navSearch && navSearch}
@@ -20,7 +20,7 @@ const DashboardLayout = ({
         <ProfileHolder />
       </div>
       {/* dashboard content */}
-      {children}
+      <section className="h-full">{children}</section>
     </div>
   );
 };

@@ -6,7 +6,7 @@ import DashboardLayout from "../components/layout/DashboardLayout";
 export default function Tasks() {
   return (
     <DashboardLayout>
-      <UnderDevelopment />;
+      <UnderDevelopment />
     </DashboardLayout>
   );
 }

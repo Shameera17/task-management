@@ -55,11 +55,11 @@ const items = [
 export function AppSideBar() {
   return (
     <Sidebar>
-      <SidebarContent className="bg-white">
-        <SidebarGroup className="flex flex-col gap-12 p-0">
+      <SidebarContent className="bg-white ">
+        <SidebarGroup className="flex flex-col gap-12 p-0 ">
           {/* Logo */}
-          <SidebarGroupContent className="">
-            <div className="relative w-full h-[72px] border-b border-[#EFEFEF]">
+          <SidebarGroupContent>
+            <div className="relative w-full min-h-[72px] border-b border-[#EFEFEF]">
               <Image
                 src="/images/logo.svg"
                 alt="Full width example"

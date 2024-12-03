@@ -10,9 +10,7 @@ export default function MainLayout({
   return (
     <SidebarProvider>
       <AppSideBar />
-      <main className="w-full min-h-svh ">
-        <div className="flex flex-col w-full h-full gap-3 ">{children}</div>
-      </main>
+      <main className="w-full h-screen ">{children}</main>
     </SidebarProvider>
   );
 }
