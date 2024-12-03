@@ -13,6 +13,7 @@ export interface Status {
 export interface User {
   name: string;
   avatarUrl: string;
+  email: string;
 }
 
 export interface Task {
