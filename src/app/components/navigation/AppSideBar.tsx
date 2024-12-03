@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Sidebar,
   SidebarContent,
@@ -5,8 +7,6 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import {
   Diagram,
@@ -16,6 +16,8 @@ import {
   Setting2,
   TaskSquare,
 } from "iconsax-react";
+import Image from "next/image";
+import { SideMenuItem } from "./SideMenuItem";
 
 // Menu items.
 const items = [
@@ -54,20 +56,29 @@ const items = [
 export function AppSideBar() {
   return (
     <Sidebar>
-      <SidebarContent>
+      <SidebarContent className="bg-white">
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
+          {/* Logo */}
+          <SidebarGroupLabel className="">
+            <div className="relative w-full h-[72px]">
+              <Image
+                src="/images/logo.svg"
+                alt="Full width example"
+                fill
+                className="object-cover" // Makes the image responsive
+              />
+            </div>
+          </SidebarGroupLabel>
+          {/* Menu items */}
+          <SidebarGroupContent className="pt-12 px-6 ">
+            <SidebarMenu className="flex flex-col gap-4">
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <SideMenuItem
+                  key={item.title}
+                  url={item.url}
+                  title={item.title}
+                  Icon={item.icon}
+                />
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
