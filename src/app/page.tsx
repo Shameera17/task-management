@@ -1,3 +1,5 @@
+import UnderDevelopment from "./components/feedback/UnderDevelopment";
+
 export default function Home() {
-  return <div className="w-screen h-screen">Dashboard</div>;
+  return <UnderDevelopment />;
 }

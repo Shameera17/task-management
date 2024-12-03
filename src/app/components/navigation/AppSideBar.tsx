@@ -5,7 +5,6 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
 } from "@/components/ui/sidebar";
 import {
@@ -57,20 +56,21 @@ export function AppSideBar() {
   return (
     <Sidebar>
       <SidebarContent className="bg-white">
-        <SidebarGroup>
+        <SidebarGroup className="flex flex-col gap-12 p-0">
           {/* Logo */}
-          <SidebarGroupLabel className="">
-            <div className="relative w-full h-[72px]">
+          <SidebarGroupContent className="">
+            <div className="relative w-full h-[72px] border-b border-[#EFEFEF]">
               <Image
                 src="/images/logo.svg"
                 alt="Full width example"
                 fill
                 className="object-cover" // Makes the image responsive
+                priority // Preloads the image [ added cos it was detected as the Largest Contentful Paint (LCP) element]
               />
             </div>
-          </SidebarGroupLabel>
+          </SidebarGroupContent>
           {/* Menu items */}
-          <SidebarGroupContent className="pt-12 px-6 ">
+          <SidebarGroupContent className=" px-6 ">
             <SidebarMenu className="flex flex-col gap-4">
               {items.map((item) => (
                 <SideMenuItem
