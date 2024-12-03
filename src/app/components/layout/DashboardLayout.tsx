@@ -20,7 +20,7 @@ const DashboardLayout = ({
         <ProfileHolder />
       </div>
       {/* dashboard content */}
-      <section className="h-full">{children}</section>
+      <section className="h-full bg-[#F6F6F6]">{children}</section>
     </div>
   );
 };
