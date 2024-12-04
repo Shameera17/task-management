@@ -26,7 +26,7 @@ export default function Tasks() {
   }, []);
   return (
     <DashboardLayout>
-      <div className="grid grid-cols-3 gap-4 min-w-[calc(3*364px+10px)] h-full px-4 pt-8 pb-5">
+      <div className="grid grid-cols-3 gap-4 min-w-[calc(3*200px+10px)] h-full px-4 pt-8 pb-5">
         {Array.isArray(statusList) &&
           statusList.map((status) => (
             <Column status={status} key={status.id} />

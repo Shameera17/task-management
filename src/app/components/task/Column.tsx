@@ -1,10 +1,9 @@
 import { StatusColumn } from "@/types";
 import React, { useMemo, useState } from "react";
 import TitleCard from "./TitleCard";
-import { Button } from "@/components/ui/button";
-import { Label4 } from "../form/label";
-import { Add } from "iconsax-react";
 import { useTaskStore } from "@/store/taskStore";
+import { AddTaskButton } from "../form/input/Buttons";
+import TaskCard from "./TaskCard";
 
 const Column: React.FC<StatusColumn> = ({ status, refreshTrigger }) => {
   const [mode, setMode] = useState<"button" | "type_card">("button");
@@ -22,20 +21,19 @@ const Column: React.FC<StatusColumn> = ({ status, refreshTrigger }) => {
         statusCode={status.code}
         count={filteredList.length}
         addTask={() => {}}
+        className="mb-6"
       />
       {/* task cards */}
+      <div className="flex flex-col gap-3">
+        {filteredList.map((task) => (
+          <TaskCard task={task} />
+        ))}
+      </div>
       {/* add task button */}
-      <Button
+      <AddTaskButton
         onClick={() => setMode("type_card")}
-        variant="ghost"
-        style={{
-          display: mode === "type_card" ? "none" : "flex",
-        }}
-        className="h-12 mt-3 w-full flex justify-center text-[#727272] hover:text-[#727272]"
-      >
-        <Add style={{ width: "24px", height: "24px" }} />
-        <Label4 text="Add task" />
-      </Button>
+        displayMode={mode === "type_card"}
+      />
       {/* temporary task card */}
     </div>
   );
