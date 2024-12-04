@@ -4,17 +4,24 @@ import TitleCard from "./TitleCard";
 import { useTaskStore } from "@/store/taskStore";
 import { AddTaskButton } from "../form/input/Buttons";
 import TaskCard from "./TaskCard";
+import { useDroppable } from "@dnd-kit/core";
 
 const Column: React.FC<StatusColumn> = ({ status, refreshTrigger }) => {
+  const { setNodeRef } = useDroppable({
+    id: status.code,
+  });
   const [mode, setMode] = useState<"button" | "type_card">("button");
   const filterTasks = useTaskStore((state) => state.filterTasks);
 
-  const filteredList = useMemo(() => {
+  const filteredList = () => {
     return filterTasks(status.code);
-  }, [refreshTrigger, status.code]);
+  };
 
   return (
-    <div className="border-dashed border-2 rounded-xl  border-[#C8C8C8] p-4  h-full">
+    <div
+      ref={setNodeRef}
+      className="border-dashed border-2 rounded-xl  border-[#C8C8C8] p-4  h-full"
+    >
       {/* title card */}
       <TitleCard
         title={status.name}
@@ -25,8 +32,8 @@ const Column: React.FC<StatusColumn> = ({ status, refreshTrigger }) => {
       />
       {/* task cards */}
       <div className="flex flex-col gap-3">
-        {filteredList.map((task) => (
-          <TaskCard task={task} />
+        {filteredList().map((task) => (
+          <TaskCard key={task.code} task={task} />
         ))}
       </div>
       {/* add task button */}

@@ -1,3 +1,4 @@
+import { generateTaskCode } from "@/lib/utils";
 import { StatusCode, Task } from "@/types";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
@@ -8,6 +9,7 @@ interface TaskState {
   removeTask: (code: string) => void;
   updateTask: (updatedTask: Task) => void;
   filterTasks: (statusCode: StatusCode) => Task[];
+  updateStatus: (statusCode: StatusCode, taskCode: string) => void;
 }
 
 export const useTaskStore = create<TaskState>()(
@@ -53,8 +55,27 @@ export const useTaskStore = create<TaskState>()(
           },
           priority: "Low",
         },
+        {
+          index: 4,
+          code: "TASK-004",
+          statusCode: "TODO" as StatusCode,
+          title: "Set up database schema",
+          description: "Design and implement the database schema.",
+          date: "2024-12-06",
+          assignee: {
+            name: "Emily Johnson",
+            avatarUrl: "https://randomuser.me/api/portraits/women/3.jpg",
+            email: "emilyjohnson@example.com",
+          },
+          priority: "High",
+        },
       ],
-      addTask: (task) => set((state) => ({ tasks: [...state.tasks, task] })),
+      addTask: (task) =>
+        set((state) => {
+          const lastCode = state.tasks[state.tasks.length - 1].code;
+          const newCode = generateTaskCode(lastCode);
+          return { tasks: [...state.tasks, { ...task, code: newCode }] };
+        }),
       removeTask: (code) =>
         set((state) => ({
           tasks: state.tasks.filter((task) => task.code !== code),
@@ -70,6 +91,12 @@ export const useTaskStore = create<TaskState>()(
         const filtered = tasks.filter((task) => task.statusCode === statusCode);
         return filtered;
       },
+      updateStatus: (statusCode: StatusCode, taskCode: string) =>
+        set((state) => ({
+          tasks: state.tasks.map((task) =>
+            task.code === taskCode ? { ...task, statusCode: statusCode } : task
+          ),
+        })),
     }),
     {
       name: "task-storage",

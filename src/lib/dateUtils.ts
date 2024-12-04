@@ -1,4 +1,4 @@
-export const getCompletionText = (dueDate: Date): string => {
+export const getCompletionText = (dueDate: string): string => {
   const today = new Date();
   const due = new Date(dueDate);
 
