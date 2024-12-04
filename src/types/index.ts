@@ -23,11 +23,15 @@ export interface Task {
   title: string;
   description: string;
   date: string;
-  assignee: User | undefined;
+  assignee: User | undefined | null;
   priority: "Low" | "Medium" | "High";
 }
 
 export interface TaskCollection {
   status: Status;
   list: Task[] | null;
+}
+export interface StatusColumn {
+  status: Status;
+  refreshTrigger?: boolean;
 }

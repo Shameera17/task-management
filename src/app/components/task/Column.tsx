@@ -1,15 +1,18 @@
-import { TaskCollection } from "@/types";
-import React, { useCallback, useState } from "react";
+import { StatusColumn } from "@/types";
+import React, { useMemo, useState } from "react";
 import TitleCard from "./TitleCard";
 import { Button } from "@/components/ui/button";
 import { Label4 } from "../form/label";
 import { Add } from "iconsax-react";
+import { useTaskStore } from "@/store/taskStore";
 
-const Column: React.FC<TaskCollection> = ({ status, list }) => {
+const Column: React.FC<StatusColumn> = ({ status, refreshTrigger }) => {
   const [mode, setMode] = useState<"button" | "type_card">("button");
-  const filteredList = useCallback(() => {
-    return list?.filter((task) => task.statusCode === status.code);
-  }, [list, status.code]);
+  const filterTasks = useTaskStore((state) => state.filterTasks);
+
+  const filteredList = useMemo(() => {
+    return filterTasks(status.code);
+  }, [refreshTrigger, status.code]);
 
   return (
     <div className="border-dashed border-2 rounded-xl  border-[#C8C8C8] p-4  h-full">
