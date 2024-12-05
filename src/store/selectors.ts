@@ -10,4 +10,5 @@ export const useTaskActions = () => ({
   taskDrawer: useTaskStore((state) => state.taskDrawer),
   manageDrawer: useTaskStore((state) => state.manageDrawer),
   updateTask: useTaskStore((state) => state.updateTask),
+  updateTaskField: useTaskStore((state) => state.updateTaskField),
 });

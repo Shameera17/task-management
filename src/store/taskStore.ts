@@ -16,6 +16,7 @@ interface TaskState {
     record: Task | undefined;
   };
   manageDrawer: (visible: boolean, record?: Task) => void;
+  updateTaskField: (code: string, key: keyof Task, value: any) => void;
 }
 
 export const useTaskStore = create<TaskState>()(
@@ -114,6 +115,12 @@ export const useTaskStore = create<TaskState>()(
       manageDrawer: (visible, record) =>
         set((state) => ({
           taskDrawer: { ...state.taskDrawer, visible, record },
+        })),
+      updateTaskField: (code, key, value) =>
+        set((state) => ({
+          tasks: state.tasks.map((task) =>
+            task.code === code ? { ...task, [key]: value } : task
+          ),
         })),
     }),
     {
