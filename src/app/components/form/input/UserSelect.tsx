@@ -58,7 +58,7 @@ export function UserSelect({
           <SelectLabel>User</SelectLabel>
           {Array.isArray(usersList) &&
             usersList.map((user) => (
-              <SelectItem value={user.email}>
+              <SelectItem key={user.email} value={user.email}>
                 <span className="flex items-center gap-2">
                   <Avatar className="h-7 w-7">
                     <AvatarImage src={user?.avatarUrl} alt="@shadcn" />
