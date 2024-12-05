@@ -10,6 +10,12 @@ interface TaskState {
   updateTask: (updatedTask: Task) => void;
   filterTasks: (statusCode: StatusCode) => Task[];
   updateStatus: (statusCode: StatusCode, taskCode: string) => void;
+  generateTaskCode: () => string;
+  taskDrawer: {
+    visible: boolean;
+    record: Task | undefined;
+  };
+  manageDrawer: (visible: boolean, record?: Task) => void;
 }
 
 export const useTaskStore = create<TaskState>()(
@@ -69,12 +75,10 @@ export const useTaskStore = create<TaskState>()(
           },
           priority: "High",
         },
-      ],
+      ] as Task[],
       addTask: (task) =>
         set((state) => {
-          const lastCode = state.tasks[state.tasks.length - 1].code;
-          const newCode = generateTaskCode(lastCode);
-          return { tasks: [...state.tasks, { ...task, code: newCode }] };
+          return { tasks: [...state.tasks, task] };
         }),
       removeTask: (code) =>
         set((state) => ({
@@ -91,11 +95,25 @@ export const useTaskStore = create<TaskState>()(
         const filtered = tasks.filter((task) => task.statusCode === statusCode);
         return filtered;
       },
-      updateStatus: (statusCode: StatusCode, taskCode: string) =>
+      updateStatus: (statusCode, taskCode) =>
         set((state) => ({
           tasks: state.tasks.map((task) =>
             task.code === taskCode ? { ...task, statusCode: statusCode } : task
           ),
+        })),
+      generateTaskCode: () => {
+        const tasks = get().tasks;
+        const lastCode = tasks[tasks.length - 1].code;
+        const newCode = generateTaskCode(lastCode);
+        return newCode;
+      },
+      taskDrawer: {
+        visible: false,
+        record: undefined,
+      },
+      manageDrawer: (visible, record) =>
+        set((state) => ({
+          taskDrawer: { ...state.taskDrawer, visible, record },
         })),
     }),
     {

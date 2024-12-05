@@ -1,3 +1,5 @@
+import { formatDate, isExpired } from "@/lib/dateUtils";
+
 interface LabelProps {
   className?: string; // Allow additional styling overrides
   text: string;
@@ -41,5 +43,24 @@ export const Label4: React.FC<LabelProps> = ({ text, className = "" }) => {
     >
       {text}
     </p>
+  );
+};
+
+export const DateLabel: React.FC<LabelProps> = ({ text, className = "" }) => {
+  const flag = isExpired(text);
+  return (
+    <div
+      className={`${
+        flag ? "bg-[#FCF4F4]" : "bg-[#F2F6FD]"
+      } rounded ${className}`}
+    >
+      <p
+        className={`${
+          flag ? "text-[#CB2E27]" : "text-[#0359E0]"
+        } py-1 px-2  font-inter text-[13px] font-medium leading-[15.73px] text-left  `}
+      >
+        {formatDate(text)}
+      </p>
+    </div>
   );
 };

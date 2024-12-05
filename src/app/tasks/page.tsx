@@ -5,12 +5,12 @@ import DashboardLayout from "../components/layout/DashboardLayout";
 import Column from "../components/task/Column";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { useEffect, useState } from "react";
-import { useTaskStore } from "@/store/taskStore";
+import { useTaskActions } from "@/store/selectors";
+import { TaskDrawer } from "../components/modal/TaskDrawer";
 export default function Tasks() {
   const [statusList, setStatusList] = useState<Status[]>([]);
-  const updateStatus = useTaskStore((state) => state.updateStatus);
-  const tasks = useTaskStore((state) => state.tasks);
-  console.log("test", tasks);
+  const { updateStatus, taskDrawer, manageDrawer } = useTaskActions();
+
   useEffect(() => {
     const fetchStatusList = async () => {
       try {
@@ -35,8 +35,7 @@ export default function Tasks() {
 
     const taskCode = active.id as string;
     const newStatus = over.id as StatusCode;
-    console.log(taskCode);
-    console.log(newStatus);
+
     updateStatus(newStatus, taskCode);
   };
   return (
@@ -49,6 +48,12 @@ export default function Tasks() {
             ))}
         </DndContext>
       </div>
+      {taskDrawer.visible && (
+        <TaskDrawer
+          onOpen={(flag) => manageDrawer(flag)}
+          open={taskDrawer.visible}
+        />
+      )}
     </DashboardLayout>
   );
 }

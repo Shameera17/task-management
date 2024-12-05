@@ -21,3 +21,15 @@ export function generateTaskCode(latestCode: string | null = null): string {
   // Combine prefix and formatted number
   return `TASK-${formattedNumber}`;
 }
+
+export const getFirstLetters = (input: string): string => {
+  // Split the string into words
+  const words = input.trim().split(" ");
+  // Check if the input has at least two words
+  if (words.length < 2) {
+    throw new Error("Input must contain at least two words");
+  }
+  // Extract the first letter of the first two words
+  return words[0][0].toUpperCase() + words[1][0].toUpperCase();
+};
+// Function to format the date as "Aug 12"

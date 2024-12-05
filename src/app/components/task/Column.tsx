@@ -26,7 +26,7 @@ const Column: React.FC<StatusColumn> = ({ status, refreshTrigger }) => {
       <TitleCard
         title={status.name}
         statusCode={status.code}
-        count={filteredList.length}
+        count={filteredList().length}
         addTask={() => {}}
         className="mb-6"
       />
