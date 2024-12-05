@@ -59,6 +59,7 @@ export function TaskDrawer({
             />
           </div>
         </SheetHeader>
+        {/* title */}
         <div className="pt-10">
           <Input
             className="font-inter !text-[25px] font-semibold leading-[30.26px] text-left"
@@ -70,6 +71,7 @@ export function TaskDrawer({
           />
         </div>
         <div className="grid grid-cols-2 gap-y-4 pt-10 pr-4">
+          {/* status */}
           <IconLabel iconPath="/images/record.svg" text="Status" />
           <div>
             <div className="flex items-center">
@@ -91,6 +93,7 @@ export function TaskDrawer({
               />
             </div>
           </div>
+          {/* calendar */}
           <IconLabel iconPath="/images/calendar.svg" text="Due Date" />
           <DatePicker
             defaultValue={record?.date!}
@@ -101,6 +104,7 @@ export function TaskDrawer({
               updateTaskField(record?.code!, "date", null);
             }}
           />
+          {/* assignee */}
           <IconLabel iconPath="/images/User.svg" text="Assignee" />
           <UserSelect
             onValueChange={(user) => {
@@ -115,6 +119,7 @@ export function TaskDrawer({
               updateTaskField(record?.code!, "assignee", null);
             }}
           />
+          {/* priority */}
           <IconLabel iconPath="/images/flag.svg" text="Priority" />
           <PrioritySelect
             onValueChange={(priority) => {
@@ -126,6 +131,7 @@ export function TaskDrawer({
             }}
           />
         </div>
+        {/* description */}
         <div className="pt-10 flex flex-col gap-4">
           <IconLabel iconPath="/images/document-text.svg" text="Description" />
           <Textarea

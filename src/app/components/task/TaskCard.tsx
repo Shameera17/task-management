@@ -45,7 +45,7 @@ const TaskCard = ({ task }: { task: Task }) => {
         <Label1 className="!mt-0" text={task.title} />
       </CardHeader>
       <CardContent className="p-4">
-        <Label2 text={task.description} className="text-[#474747]" />
+        <Label2 text={task.description ?? ""} className="text-[#474747]" />
         <div className="flex justify-between mt-2">
           <div className="flex gap-4 items-center">
             <Avatar>

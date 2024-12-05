@@ -17,14 +17,24 @@ export interface User {
 }
 
 export interface Task {
-  index: number;
+  index?: number;
   code: string;
   statusCode: StatusCode;
   title: string;
-  description: string;
+  description?: string;
   date: string;
   assignee: User | undefined | null;
   priority: "Low" | "Medium" | "High" | null;
+}
+export interface TempTask {
+  index?: number;
+  code?: string;
+  statusCode?: StatusCode;
+  title?: string;
+  description?: string;
+  date?: string;
+  assignee?: User | undefined | null;
+  priority?: "Low" | "Medium" | "High" | null;
 }
 
 export interface TaskCollection {

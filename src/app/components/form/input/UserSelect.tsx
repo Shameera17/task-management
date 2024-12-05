@@ -13,15 +13,18 @@ import {
 import { User } from "@/types";
 import { getFirstLetters } from "@/lib/utils";
 import { X } from "lucide-react";
+import "./styles.css";
 
 export function UserSelect({
   defaultValue,
   onValueChange,
   onSelectRemove,
+  isTempCard,
 }: {
   defaultValue: string;
   onValueChange: (user: User) => void;
-  onSelectRemove: () => void;
+  onSelectRemove?: () => void;
+  isTempCard?: boolean;
 }) {
   const [usersList, setUsersList] = React.useState<User[]>([]);
 
@@ -43,7 +46,11 @@ export function UserSelect({
   }, []);
 
   return (
-    <div className="flex gap-2 items-center w-[190px]">
+    <div
+      className={`flex gap-2 items-center ${
+        !isTempCard ? "w-[190px]" : "w-full"
+      }`}
+    >
       <Select
         value={defaultValue ?? ""}
         onValueChange={(value) => {
@@ -52,12 +59,35 @@ export function UserSelect({
         }}
         defaultValue={defaultValue ?? undefined}
       >
-        <SelectTrigger className="w-[170px]">
-          <SelectValue
-            defaultValue={defaultValue ?? undefined}
-            placeholder="Select a user"
-          />
-        </SelectTrigger>
+        {isTempCard && (
+          <SelectTrigger className="custom-select">
+            <Avatar className="h-9 w-9">
+              <AvatarImage
+                src={
+                  usersList.find((user) => user.email === defaultValue)
+                    ?.avatarUrl ?? `/images/user-1.svg`
+                }
+                alt="@shadcn"
+              />
+              <AvatarFallback>
+                {defaultValue
+                  ? getFirstLetters(
+                      usersList.find((user) => user.email === defaultValue)
+                        ?.name ?? ""
+                    )
+                  : `/images/user-1.svg`}
+              </AvatarFallback>
+            </Avatar>
+          </SelectTrigger>
+        )}
+        {!isTempCard && (
+          <SelectTrigger className="w-[170px]">
+            <SelectValue
+              defaultValue={defaultValue ?? undefined}
+              placeholder="Select a user"
+            />
+          </SelectTrigger>
+        )}
         <SelectContent>
           <SelectGroup>
             <SelectLabel>User</SelectLabel>
@@ -78,7 +108,7 @@ export function UserSelect({
           </SelectGroup>
         </SelectContent>
       </Select>
-      {defaultValue && (
+      {defaultValue && onSelectRemove && (
         <span className="w-5 h-5">
           <X className="h-full cursor-pointer" onClick={onSelectRemove} />
         </span>

@@ -12,15 +12,19 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { DateLabel } from "../label";
 
 export function DatePicker({
   defaultValue,
   onValueChange,
   onSelectRemove,
+  isTempCard,
 }: {
   defaultValue: string;
   onValueChange: (priority: string) => void;
-  onSelectRemove: () => void;
+  onSelectRemove?: () => void;
+  isTempCard?: boolean;
 }) {
   const [date, setDate] = React.useState<Date>();
   React.useEffect(() => {
@@ -30,20 +34,34 @@ export function DatePicker({
   }, [defaultValue]);
 
   return (
-    <div className="flex gap-3 items-center">
+    <div className="flex gap-3 w-full items-center">
       <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant={"outline"}
-            className={cn(
-              "w-[280px] justify-start text-left font-normal",
-              !date && "text-muted-foreground"
+        {!isTempCard && (
+          <PopoverTrigger asChild>
+            <Button
+              variant={"outline"}
+              className={cn(
+                "w-[280px] justify-start text-left font-normal",
+                !date && "text-muted-foreground"
+              )}
+            >
+              {!date && <CalendarIcon />}
+              {date ? format(date, "PP") : <span>Pick a date</span>}
+            </Button>
+          </PopoverTrigger>
+        )}
+        {isTempCard && (
+          <PopoverTrigger>
+            {!date && (
+              <Avatar className=" cursor-pointer">
+                <AvatarImage src={`/images/date.svg`} alt="@shadcn" />
+              </Avatar>
             )}
-          >
-            {!date && <CalendarIcon />}
-            {date ? format(date, "PP") : <span>Pick a date</span>}
-          </Button>
-        </PopoverTrigger>
+            {date && (
+              <DateLabel className="h-6  cursor-pointer " text={defaultValue} />
+            )}
+          </PopoverTrigger>
+        )}
         <PopoverContent className="w-auto p-0">
           <Calendar
             mode="single"
@@ -63,7 +81,7 @@ export function DatePicker({
           />
         </PopoverContent>
       </Popover>
-      {defaultValue && (
+      {defaultValue && onSelectRemove && (
         <span className="w-5 h-5">
           <X className="h-full cursor-pointer" onClick={onSelectRemove} />
         </span>

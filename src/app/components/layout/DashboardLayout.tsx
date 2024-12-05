@@ -10,7 +10,7 @@ const DashboardLayout = ({
   navSearch?: React.ReactNode;
 }) => {
   return (
-    <div className="flex flex-col h-full ">
+    <div className="flex flex-col h-full  ">
       {/* top nav */}
       <div className="flex items-center min-h-[72px] justify-between px-6 border-b border-[#EFEFEF] ">
         <div>
@@ -20,7 +20,9 @@ const DashboardLayout = ({
         <ProfileHolder />
       </div>
       {/* dashboard content */}
-      <section className="h-full bg-[#F6F6F6]">{children}</section>
+      <section className="h-full bg-[#F6F6F6] overflow-auto">
+        {children}
+      </section>
     </div>
   );
 };

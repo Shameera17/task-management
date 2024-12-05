@@ -29,8 +29,7 @@ Follow these steps to set up the project locally:
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository_url>
-cd <repository_folder>
+git clone <https://github.com/Shameera17/task-management>
 ```
 
 ### 2. Install Dependencies

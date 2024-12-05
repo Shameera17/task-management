@@ -5,6 +5,7 @@ import { useTaskStore } from "@/store/taskStore";
 import { AddTaskButton } from "../form/input/Buttons";
 import TaskCard from "./TaskCard";
 import { useDroppable } from "@dnd-kit/core";
+import TemporaryTaskCard from "./TemporaryTaskCard";
 
 const Column: React.FC<StatusColumn> = ({ status, refreshTrigger }) => {
   const { setNodeRef } = useDroppable({
@@ -27,7 +28,7 @@ const Column: React.FC<StatusColumn> = ({ status, refreshTrigger }) => {
         title={status.name}
         statusCode={status.code}
         count={filteredList().length}
-        addTask={() => {}}
+        addTask={() => setMode("type_card")}
         className="mb-6"
       />
       {/* task cards */}
@@ -37,11 +38,18 @@ const Column: React.FC<StatusColumn> = ({ status, refreshTrigger }) => {
         ))}
       </div>
       {/* add task button */}
-      <AddTaskButton
-        onClick={() => setMode("type_card")}
-        displayMode={mode === "type_card"}
-      />
+      {mode === "button" && (
+        <AddTaskButton onClick={() => setMode("type_card")} />
+      )}
       {/* temporary task card */}
+      {mode === "type_card" && (
+        <TemporaryTaskCard
+          statusCode={status.code}
+          hideCard={() => {
+            setMode("button");
+          }}
+        />
+      )}
     </div>
   );
 };
