@@ -40,6 +40,7 @@ const TaskCard = ({ task }: { task: Task }) => {
           alt={"status"}
           height={16}
           width={16}
+          priority
           className="mr-2"
         />
         <Label1 className="!mt-0" text={task.title} />
