@@ -153,6 +153,16 @@ export const useTaskStore = create<TaskState>()(
           tasks: state.tasks.map((task) =>
             task.code === code ? { ...task, [key]: value } : task
           ),
+          taskDrawer:
+            state.taskDrawer.visible && code === state.taskDrawer.record?.code
+              ? {
+                  ...state.taskDrawer,
+                  record: {
+                    ...state.taskDrawer.record,
+                    [key]: value,
+                  },
+                }
+              : state.taskDrawer,
         })),
     }),
     {

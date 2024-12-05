@@ -31,7 +31,7 @@ export function TaskDrawer({
   return (
     <Sheet onOpenChange={onOpen} open={open}>
       {/* top */}
-      <SheetContent className="[&>button]:hidden">
+      <SheetContent className="[&>button]:hidden ">
         <SheetHeader className="flex justify-between w-full flex-row">
           {record?.statusCode !== StatusCode.COMPLETED && (
             <Button
@@ -68,7 +68,7 @@ export function TaskDrawer({
             }}
           />
         </div>
-        <div className="grid grid-cols-2 gap-4 pt-10">
+        <div className="grid grid-cols-2 gap-y-4 pt-10 pr-4">
           <IconLabel iconPath="/images/record.svg" text="Status" />
           <div>
             <div className="flex items-center">
@@ -102,6 +102,9 @@ export function TaskDrawer({
                 ? record?.assignee!.email
                 : ""
             }
+            onSelectRemove={() => {
+              updateTaskField(record?.code!, "assignee", null);
+            }}
           />
           <IconLabel iconPath="/images/flag.svg" text="Priority" />
           <PrioritySelect
@@ -109,6 +112,9 @@ export function TaskDrawer({
               updateTaskField(record?.code!, "priority", priority);
             }}
             defaultValue={record?.priority!}
+            onSelectRemove={() => {
+              updateTaskField(record?.code!, "priority", null);
+            }}
           />
         </div>
         <div className="pt-10 flex flex-col gap-4">
