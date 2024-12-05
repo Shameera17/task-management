@@ -22,7 +22,7 @@ export const SideMenuItem: React.FC<SideMenuItemProps> = ({
           href={url}
           className={`flex items-center gap-2 py-5 px-3 rounded transition-all duration-200 ease-linear font-semibold text-base ${
             isActive
-              ? "bg-blue-500 text-white hover:bg-blue-500 hover:text-white"
+              ? "bg-[#0359E0] text-white hover:bg-[#0359E0] hover:text-white"
               : "bg-[#F6F6F6] text-gray-700 hover:text-slate-500 hover:bg-slate-200"
           }`}
         >

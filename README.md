@@ -6,10 +6,9 @@ A modern **Task Management App** built with **Next.js 14** and **React 18**. Thi
 
 ## Features
 
-- **Task Management**: Add, edit, delete, and reorder tasks effortlessly.
+- **Task Management**: Add, edit, delete, and drag and drop tasks effortlessly.
 - **Drag and Drop**: Rearrange tasks using an intuitive drag-and-drop interface built with **React DnD**.
 - **State Management**: Persistent state management using **Zustand**.
-- **Production Ready**: Optimized for performance and scalability with Next.js 14.
 
 ---
 
@@ -64,14 +63,39 @@ yarn dev
 
 ```bash
 
-├── public/         # Static assets
-├── src/            # Main source files
-│   ├── components/ # Reusable components
-│   ├── pages/      # Next.js pages
-│   ├── state/      # Zustand store for task management
-│   ├── styles/     # Global and modular CSS files
-│   └── utils/      # Utility functions
-├── .env.local      # Environment variables
-├── next.config.js  # Next.js configuration
-└── package.json    # Project metadata and dependencies
+/project-root
+├── /node_modules              # Node.js dependencies
+├── /public                    # Static assets available to the public
+│   ├── /data                  # Static data files (e.g., JSON, CSV)
+│   ├── /favicon               # Favicon assets
+│   └── /images                # Static images (e.g., logos, icons)
+├── /src
+│   ├── /app                   # Core application (Next.js App Router)
+│   │   ├── /components        # Reusable UI components
+│   │   ├── /inbox             # Inbox page
+│   │   ├── /insights          # Insights page
+│   │   ├── /report            # Report page
+│   │   ├── /settings          # Gsettings page
+│   │   ├── /tasks             # Task page
+│   │   ├── /globals.css       # Global styles for the app
+│   │   ├── /layout.tsx        # Main layout component for app-wide structure
+│   │   ├── /not-found.tsx     # Custom 404 page
+│   │   ├── /page.tsx          # Default page or home page
+│   ├── /store                 # Global state management (Zustand)
+│   ├── /hooks                 # Custom hooks (e.g., useTasks, useUser)
+│   ├── /lib                   # Utility functions (e.g., helpers, formatters)
+│   ├── /types                 # TypeScript types and interfaces
+│   ├── .eslintignore          # ESLint ignore rules
+│   ├── .gitignore             # Git ignore rules
+│   ├── components.json        # Custom components configuration (if needed)
+│   ├── next-env.d.ts          # TypeScript environment types
+│   ├── next.config.mjs        # Next.js configuration
+│   ├── tailwind.config.ts     # Tailwind CSS configuration
+│   ├── postcss.config.mjs     # PostCSS configuration
+│   ├── tsconfig.json          # TypeScript configuration
+│   ├── README.md              # Project documentation
+├── package.json               # Project dependencies and scripts
+├── package-lock.json          # Lock file for dependencies
+└── yarn.lock                  # Lock file for yarn (if used)
+
 ```
