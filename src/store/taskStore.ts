@@ -93,7 +93,7 @@ export const useTaskStore = create<TaskState>()(
           statusCode: "TODO",
           title: "Research on OAuth2 providers",
           description: "Find suitable OAuth2 providers for authentication.",
-          date: "2024-12-05",
+          date: null,
           assignee: null,
           priority: null,
         },

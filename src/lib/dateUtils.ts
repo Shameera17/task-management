@@ -1,4 +1,5 @@
 export const getCompletionText = (dueDate: string): string => {
+  if (!dueDate) return "No due date given";
   const today = new Date();
   const due = new Date(dueDate);
 

@@ -49,6 +49,7 @@ export const Label4: React.FC<LabelProps> = ({ text, className = "" }) => {
 
 export const DateLabel: React.FC<LabelProps> = ({ text, className = "" }) => {
   const flag = isExpired(text);
+  if (!text) return;
   return (
     <div
       className={`${

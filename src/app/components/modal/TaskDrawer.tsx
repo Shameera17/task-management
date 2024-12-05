@@ -12,6 +12,7 @@ import Image from "next/image";
 import { StatusCode } from "@/types";
 import { PrioritySelect } from "../form/input/PrioritySelect";
 import { UserSelect } from "../form/input/UserSelect";
+import { DatePicker } from "../form/input/DatePicker";
 
 export function TaskDrawer({
   onOpen,
@@ -32,7 +33,7 @@ export function TaskDrawer({
     <Sheet onOpenChange={onOpen} open={open}>
       {/* top */}
       <SheetContent className="[&>button]:hidden ">
-        <SheetHeader className="flex justify-between w-full flex-row">
+        <SheetHeader className="flex justify-between  w-full flex-row">
           {record?.statusCode !== StatusCode.COMPLETED && (
             <Button
               variant="outline"
@@ -45,7 +46,7 @@ export function TaskDrawer({
               />
             </Button>
           )}
-          <div className="flex gap-3 ml-auto self-end">
+          <div className="flex gap-3 ml-auto  self-center">
             <Trash
               onClick={() => setOpenDialog(true)}
               size={"20"}
@@ -91,7 +92,15 @@ export function TaskDrawer({
             </div>
           </div>
           <IconLabel iconPath="/images/calendar.svg" text="Due Date" />
-          <div>calendar</div>
+          <DatePicker
+            defaultValue={record?.date!}
+            onValueChange={(date) => {
+              updateTaskField(record?.code!, "date", date);
+            }}
+            onSelectRemove={() => {
+              updateTaskField(record?.code!, "date", null);
+            }}
+          />
           <IconLabel iconPath="/images/User.svg" text="Assignee" />
           <UserSelect
             onValueChange={(user) => {

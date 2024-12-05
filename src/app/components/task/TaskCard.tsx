@@ -23,7 +23,6 @@ const TaskCard = ({ task }: { task: Task }) => {
   const style = transform
     ? { transform: `translate(${transform.x}px, ${transform.y}px)` }
     : undefined;
-
   return (
     <Card
       ref={setNodeRef}
@@ -49,15 +48,26 @@ const TaskCard = ({ task }: { task: Task }) => {
         <Label2 text={task.description} className="text-[#474747]" />
         <div className="flex justify-between mt-2">
           <div className="flex gap-4 items-center">
-            <div style={{ display: task.assignee ? "inline" : "hidden" }}>
+            <Avatar>
+              {task.assignee?.avatarUrl && (
+                <>
+                  <AvatarImage src={task.assignee?.avatarUrl} alt="@shadcn" />
+                  <AvatarFallback>
+                    {task.assignee?.name &&
+                      getFirstLetters(task.assignee?.name!)}
+                  </AvatarFallback>
+                </>
+              )}
+              {!task.assignee?.avatarUrl && (
+                <AvatarImage src={`/images/user-1.svg`} alt="@shadcn" />
+              )}
+            </Avatar>
+            {task.date && <DateLabel className="h-6" text={task.date} />}
+            {!task.date && (
               <Avatar>
-                <AvatarImage src={task.assignee?.avatarUrl} alt="@shadcn" />
-                <AvatarFallback>
-                  {task.assignee?.name && getFirstLetters(task.assignee?.name!)}
-                </AvatarFallback>
+                <AvatarImage src={`/images/date.svg`} alt="@shadcn" />
               </Avatar>
-            </div>
-            <DateLabel className="h-6" text={task.date} />
+            )}
           </div>
           <img src={`/images/State${task.priority}.svg`} alt="" />
         </div>
