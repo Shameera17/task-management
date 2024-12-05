@@ -2,12 +2,16 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
-import { IconLabel } from "../form/label";
+import { IconLabel, Label4 } from "../form/label";
 import { ArrowRight, Trash } from "iconsax-react";
 import { useTaskActions } from "@/store/selectors";
 import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { RemoveTaskDialog } from "./RemoveTaskDialog";
+import Image from "next/image";
+import { StatusCode } from "@/types";
+import { PrioritySelect } from "../form/input/PrioritySelect";
+import { UserSelect } from "../form/input/UserSelect";
 
 export function TaskDrawer({
   onOpen,
@@ -16,22 +20,32 @@ export function TaskDrawer({
   onOpen: (flag: boolean) => void;
   open: boolean;
 }) {
-  const { taskDrawer, updateTaskField, removeTask, manageDrawer } =
-    useTaskActions();
+  const {
+    taskDrawer: { record },
+    updateTaskField,
+    removeTask,
+    manageDrawer,
+    updateStatus,
+  } = useTaskActions();
   const [openDialog, setOpenDialog] = useState(false);
   return (
     <Sheet onOpenChange={onOpen} open={open}>
       {/* top */}
       <SheetContent className="[&>button]:hidden">
-        <SheetHeader className="flex justify-between flex-row">
-          <Button variant="outline">
-            <IconLabel
-              iconPath="/images/tick-circle-2.svg"
-              text="Mark Complete"
-              className="text-[#1C1C1C] "
-            />
-          </Button>
-          <div className="flex gap-3">
+        <SheetHeader className="flex justify-between w-full flex-row">
+          {record?.statusCode !== StatusCode.COMPLETED && (
+            <Button
+              variant="outline"
+              onClick={() => updateStatus(StatusCode.COMPLETED, record?.code!)}
+            >
+              <IconLabel
+                iconPath="/images/tick-circle-2.svg"
+                text="Mark Complete"
+                className="text-[#1C1C1C] "
+              />
+            </Button>
+          )}
+          <div className="flex gap-3 ml-auto self-end">
             <Trash
               onClick={() => setOpenDialog(true)}
               size={"20"}
@@ -48,34 +62,63 @@ export function TaskDrawer({
           <Input
             className="font-inter !text-[25px] font-semibold leading-[30.26px] text-left"
             placeholder="shadcn"
-            defaultValue={taskDrawer.record?.title}
+            defaultValue={record?.title}
             onChange={(e) => {
-              updateTaskField(
-                taskDrawer.record?.code!,
-                "title",
-                e.target.value
-              );
+              updateTaskField(record?.code!, "title", e.target.value);
             }}
           />
         </div>
         <div className="grid grid-cols-2 gap-4 pt-10">
           <IconLabel iconPath="/images/record.svg" text="Status" />
+          <div>
+            <div className="flex items-center">
+              <Image
+                src={`/images/${record?.statusCode.toLocaleLowerCase()}.svg`}
+                alt={"status"}
+                height={18}
+                width={18}
+              />
+              <Label4
+                text={
+                  record?.statusCode! === StatusCode.IN_PROGRESS
+                    ? "In Progress"
+                    : record?.statusCode === StatusCode.TODO
+                    ? "Todo"
+                    : "Completed"
+                }
+                className="ml-2 mr-4"
+              />
+            </div>
+          </div>
           <IconLabel iconPath="/images/calendar.svg" text="Due Date" />
-          <IconLabel iconPath="/images/User.svg" text="Mark Complete" />
+          <div>calendar</div>
+          <IconLabel iconPath="/images/User.svg" text="Assignee" />
+          <UserSelect
+            onValueChange={(user) => {
+              updateTaskField(record?.code!, "assignee", user);
+            }}
+            defaultValue={
+              record?.assignee && record?.assignee!.email
+                ? record?.assignee!.email
+                : ""
+            }
+          />
           <IconLabel iconPath="/images/flag.svg" text="Priority" />
+          <PrioritySelect
+            onValueChange={(priority) => {
+              updateTaskField(record?.code!, "priority", priority);
+            }}
+            defaultValue={record?.priority!}
+          />
         </div>
         <div className="pt-10 flex flex-col gap-4">
           <IconLabel iconPath="/images/document-text.svg" text="Description" />
           <Textarea
             className="font-inter !text-[16px] font-medium leading-[19.36px] text-[#474747] text-left"
             placeholder="shadcn"
-            defaultValue={taskDrawer.record?.description}
+            defaultValue={record?.description}
             onChange={(e) => {
-              updateTaskField(
-                taskDrawer.record?.code!,
-                "description",
-                e.target.value
-              );
+              updateTaskField(record?.code!, "description", e.target.value);
             }}
           />
         </div>
@@ -84,7 +127,7 @@ export function TaskDrawer({
         <RemoveTaskDialog
           onOpen={setOpenDialog}
           onRemoveClick={() => {
-            removeTask(taskDrawer.record?.code!);
+            removeTask(record?.code!);
             manageDrawer(false, undefined);
           }}
           open={openDialog}

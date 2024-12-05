@@ -24,7 +24,7 @@ export interface Task {
   description: string;
   date: string;
   assignee: User | undefined | null;
-  priority: "Low" | "Medium" | "High";
+  priority: "Low" | "Medium" | "High" | null;
 }
 
 export interface TaskCollection {

@@ -76,6 +76,27 @@ export const useTaskStore = create<TaskState>()(
           },
           priority: "High",
         },
+        {
+          index: 9,
+          code: "TASK-009",
+          statusCode: "COMPLETED",
+          title: "Deploy staging environment",
+          description:
+            "Deploy the application to the staging environment for QA.",
+          date: "2024-11-29",
+          assignee: null,
+          priority: null,
+        },
+        {
+          index: 10,
+          code: "TASK-010",
+          statusCode: "TODO",
+          title: "Research on OAuth2 providers",
+          description: "Find suitable OAuth2 providers for authentication.",
+          date: "2024-12-05",
+          assignee: null,
+          priority: null,
+        },
       ] as Task[],
       addTask: (task) =>
         set((state) => {
@@ -101,6 +122,17 @@ export const useTaskStore = create<TaskState>()(
           tasks: state.tasks.map((task) =>
             task.code === taskCode ? { ...task, statusCode: statusCode } : task
           ),
+          taskDrawer:
+            state.taskDrawer.visible &&
+            taskCode === state.taskDrawer.record?.code
+              ? {
+                  ...state.taskDrawer,
+                  record: {
+                    ...state.taskDrawer.record,
+                    statusCode: statusCode,
+                  },
+                }
+              : state.taskDrawer,
         })),
       generateTaskCode: () => {
         const tasks = get().tasks;

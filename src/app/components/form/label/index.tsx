@@ -73,7 +73,7 @@ export const IconLabel: React.FC<{
 }> = ({ text, className, iconPath }) => {
   return (
     <div
-      className={`w-auto h-auto flex content-center text-[#727272] ${className}`}
+      className={`w-auto h-auto flex items-center text-[#727272] ${className}`}
     >
       <Image
         src={iconPath}
