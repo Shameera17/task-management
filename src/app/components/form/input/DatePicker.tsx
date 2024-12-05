@@ -49,7 +49,6 @@ export function DatePicker({
             mode="single"
             selected={date}
             onSelect={(date) => {
-              console.log(date);
               if (date) {
                 // Extract the year, month, and day in the local timezone
                 const year = date.getFullYear();
