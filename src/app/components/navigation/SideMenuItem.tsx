@@ -15,8 +15,7 @@ export const SideMenuItem: React.FC<SideMenuItemProps> = ({
 }) => {
   const pathname = usePathname();
   const isActive = pathname === url;
-  console.log("pathname", pathname);
-  console.log("url", url);
+
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild>
