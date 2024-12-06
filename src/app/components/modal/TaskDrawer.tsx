@@ -105,7 +105,7 @@ export function TaskDrawer({
             }}
           />
           {/* assignee */}
-          <IconLabel iconPath="/images/User.svg" text="Assignee" />
+          <IconLabel iconPath="/images/user.svg" text="Assignee" />
           <UserSelect
             onValueChange={(user) => {
               updateTaskField(record?.code!, "assignee", user);
